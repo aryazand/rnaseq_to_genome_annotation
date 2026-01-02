@@ -65,6 +65,7 @@ mapping_stats:
 annotation:
   stringtie:
     ref_gtf: ""
+    strandedness: ""
     extra: ""
 
 qc:
