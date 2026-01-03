@@ -25,6 +25,7 @@ use rule * from fastq_process_align as fastq_process_align_*
 
 include: "rules/star2ndpass.smk"
 include: "rules/stringtie.smk"
+include: "rules/mapping_stats.smk"
 
 
 # optional messages, log and error handling
@@ -46,4 +47,5 @@ onerror:
 rule all:
     input:
         "results/multiqc/multiqc_report.html",
+        "results/stringtie/stringtie_merged.gtf",
     default_target: True

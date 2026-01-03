@@ -1,6 +1,6 @@
 rule stringtie:
     input:
-        bam="results/samtools/filtered/{sample}.bam",
+        bam=fastq_process_align.get_bam_2,
     output:
         "results/stringtie/{sample}.gtf",
     conda:
@@ -19,14 +19,12 @@ rule stringtie:
             )
         ),
     shell:
-        "stringtie {input.bam} -G {input.ref_gff} {params.strandedness} -o {output}"
+        "stringtie {input.bam} -G {params.ref_gff} {params.strandedness} -o {output}"
 
 
 rule stringtie_merge:
     input:
-        gtfs=lambda wildcards: expand(
-            "results/stringtie/{sample}.gtf", sample=wildcards.sample
-        ),
+        gtfs=expand("results/stringtie/{sample}.gtf", sample = fastq_process_align.samples.index),
     output:
         gtflist=temp("stringtie_gtflist.txt"),
         gtf="results/stringtie/stringtie_merged.gtf",
@@ -39,5 +37,5 @@ rule stringtie_merge:
     shell:
         """
        for sample in {input.gtfs}; do echo $sample >> {output.gtflist};done
-       stringtie -p {resources.cpus_per_task} --merge {output.gtflist} -G {input.ref_gff} -o {output.gtf}
+       stringtie -p --merge {output.gtflist} -G {params.ref_gff} -o {output.gtf}
        """
