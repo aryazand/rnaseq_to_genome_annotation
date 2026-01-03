@@ -1,6 +1,6 @@
 use rule samtools_sort from fastq_process_align as fastq_process_align_samtools_sort with:
     input:
-        "results/star/aligned/{sample}/mapped_2ndpass.bam"
+        "results/star/align/{sample}/mapped_2ndpass.bam"
 
 
 rule samtools_filter:
