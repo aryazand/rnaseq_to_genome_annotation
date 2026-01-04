@@ -26,7 +26,6 @@ rule stringtie_merge:
     input:
         gtfs=expand("results/stringtie/{sample}.gtf", sample = fastq_process_align.samples.index),
     output:
-        gtflist=temp("stringtie_gtflist.txt"),
         gtf="results/stringtie/stringtie_merged.gtf",
     conda:
         "../envs/stringtie.yml"
@@ -36,6 +35,5 @@ rule stringtie_merge:
         ref_gff=config["annotation"]["stringtie"]["ref_anno"],
     shell:
         """
-       for sample in {input.gtfs}; do echo $sample >> {output.gtflist};done
-       stringtie -p --merge {output.gtflist} -G {params.ref_gff} -o {output.gtf}
+       stringtie --merge -G {params.ref_gff} -o {output.gtf} {input.gtfs}
        """
