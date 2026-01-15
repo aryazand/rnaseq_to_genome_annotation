@@ -24,7 +24,9 @@ rule stringtie:
 
 rule stringtie_merge:
     input:
-        gtfs=expand("results/stringtie/{sample}.gtf", sample = fastq_process_align.samples.index),
+        gtfs=expand(
+            "results/stringtie/{sample}.gtf", sample=fastq_process_align.samples.index
+        ),
     output:
         gtf="results/stringtie/stringtie_merged.gtf",
     conda:

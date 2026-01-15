@@ -23,9 +23,14 @@ module fastq_process_align:
 use rule * from fastq_process_align as fastq_process_align_*
 
 
+trackhub_dir = "genome_browser/ucsc_trackhub/"
+
+
 include: "rules/star2ndpass.smk"
 include: "rules/stringtie.smk"
 include: "rules/mapping_stats.smk"
+include: "rules/ucsc_trackhub.smk"
+include: "rules/coverage.smk"
 
 
 # optional messages, log and error handling
@@ -48,4 +53,8 @@ rule all:
     input:
         "results/multiqc/multiqc_report.html",
         "results/stringtie/stringtie_merged.gtf",
+        expand(
+            os.path.join(trackhub_dir, "{org}", "trackDb.txt"),
+            org=config["ucsc_trackhub"]["genomes"],
+        ),
     default_target: True

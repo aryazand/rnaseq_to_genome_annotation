@@ -7,12 +7,12 @@ get_genome:
   gff: "data/genome/KF297339.1.gff"
   gff_source_type:
     [
-      "RefSeq": "gene",
-      "RefSeq": "pseudogene",
-      "RefSeq": "CDS",
+      "Genbank": "gene",
+      "Genbank": "pseudogene",
+      "Genbank": "CDS",
       "Protein Homology": "CDS",
     ]
-    
+
 processing:
   tool: "fastp"
   fastp:
@@ -20,7 +20,7 @@ processing:
   trim_galore:
     extra: "--gzip --paired"
   umi_tools_extract:
-    enabled: true  # Set to true to enable UMI extraction
+    enabled: true # Set to true to enable UMI extraction
     extra: "--bc-pattern=NNNNNNNN --3prime"
 
 mapping:
@@ -47,9 +47,9 @@ mapping:
     extra: ""
   samtools_view:
     region: ""
-  umi_tools_dedup: 
-    enabled: true  # Set to true to enable deduplication
-    extra: ""  # or directional, cluster, adjacency, etc.
+  umi_tools_dedup:
+    enabled: true # Set to true to enable deduplication
+    extra: "" # or directional, cluster, adjacency, etc.
 
 mapping_stats:
   gffread:
@@ -60,7 +60,7 @@ mapping_stats:
     extra: ""
   deeptools_coverage:
     genome_size: 230000
-    extra: ""
+    extra: "--binSize 10 --normalizeUsing RPKM"
 
 annotation:
   stringtie:
@@ -76,3 +76,37 @@ qc:
 
 report:
   minimum_variant_count: 2
+
+ucsc_trackhub:
+  hub_name: "test"
+  email: "aryazand@test.org"
+  short_label: "TEST trackhub"
+  long_label: "TEST trackhub"
+  process_stringtie:
+    track_name: "annotation_track"
+    shortLabel: "annotations from RNA-seq"
+    longLabel: "annotations from RNA-seq"
+    gtf_to_genePred: ""
+    GenePred_to_bgpInput: ""
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
+  process_genome_annotation:
+    gff3_to_GenePred: "-rnaNameAttr=gene" #gff3ToGenePred
+    GenePred_to_bgpInput: "" #genePredToBigGenePred
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab" #bedToBigBed
+  process_fasta:
+    faToTwoBit: ""
+  process_bw:
+    plus_color: "0,0,100"
+    minus_color: "255,0,0"
+    negateValues_for_minus_strand: "on" # on or off
+  genomes:
+    KF297339.1:
+      defaultPos: "KF297339.1:1-20000"
+      organism: "Human Cytomegalovirus"
+      scientificName: "Human Herpesvirus 5 strain TB40E"
+      description: "HCMV TB40E, clone Lisa"
+      html_string: "HCMV TB40E, clone Lisa (html string)"
+      annotation:
+        track_name: "TB40"
+        short_label: "HCMV TB40E"
+        long_label: "HCMV TB40E, clone Lisa"

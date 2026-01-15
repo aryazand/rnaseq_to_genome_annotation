@@ -1,6 +1,8 @@
 rule star_2ndpass:
     input:
-        fq1=lambda wildcards: fastq_process_align.get_processed_fastq(wildcards.sample, regex="read1"),
+        fq1=lambda wildcards: fastq_process_align.get_processed_fastq(
+            wildcards.sample, regex="read1"
+        ),
         fq2=lambda wildcards: (
             fastq_process_align.get_processed_fastq(wildcards.sample, regex="read2")
             if fastq_process_align.is_paired_end()
@@ -8,7 +10,7 @@ rule star_2ndpass:
         ),
         idx=rules.fastq_process_align_star_index.output,
         aln="results/star/align/{sample}/mapped.bam",
-        sj="results/star/align/{sample}/SJ.out.tab"
+        sj="results/star/align/{sample}/SJ.out.tab",
     output:
         aln="results/star/align/{sample}/mapped_2ndpass.bam",
         log_final="results/star/align/{sample}/Log_2ndpass.final.out",
