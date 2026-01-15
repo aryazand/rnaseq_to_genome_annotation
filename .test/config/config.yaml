@@ -67,6 +67,8 @@ annotation:
     ref_anno: "data/genome/KF297339.1.gff"
     strandedness: ""
     extra: ""
+  gffcompare:
+    extra: ""
 
 qc:
   multiqc:
@@ -83,9 +85,16 @@ ucsc_trackhub:
   short_label: "TEST trackhub"
   long_label: "TEST trackhub"
   process_stringtie:
-    track_name: "annotation_track"
-    shortLabel: "annotations from RNA-seq"
-    longLabel: "annotations from RNA-seq"
+    track_name: "annotation_track_stringtie"
+    shortLabel: "annotations from RNA-seq (stringtie)"
+    longLabel: "annotations from RNA-seq (stringtie)"
+    gtf_to_genePred: ""
+    GenePred_to_bgpInput: ""
+    bgpInput_to_bigGenePred: "-type=bed12+8 -tab"
+  process_gffcompare:
+    track_name: "annotation_track_gffcompare"
+    shortLabel: "annotations from RNA-seq (gffcompare)"
+    longLabel: "annotations from RNA-seq (gffcompare)"
     gtf_to_genePred: ""
     GenePred_to_bgpInput: ""
     bgpInput_to_bigGenePred: "-type=bed12+8 -tab"

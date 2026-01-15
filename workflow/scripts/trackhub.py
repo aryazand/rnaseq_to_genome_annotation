@@ -68,6 +68,18 @@ for assembly_name, assembly_data in snakemake.config["ucsc_trackhub"]["genomes"]
 
     trackdb.add_tracks(stringtie_track)
 
+    # Add gffcompare Annotation track
+    gffcompare_track = trackhub.Track(
+        name=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["track_name"],
+        tracktype="bigBed",
+        source=os.path.abspath(snakemake.input.gffcompare),
+        shortLabel=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["shortLabel"],
+        longLabel=snakemake.config["ucsc_trackhub"]["process_gffcompare"]["longLabel"],
+        visibility="dense",
+    )
+
+    trackdb.add_tracks(gffcompare_track)
+
     # Loop through bigwig files in snakemake.input.bw and add to trackhub
     for bw in snakemake.input.plus_bw:
         bw_basename=os.path.basename(bw)

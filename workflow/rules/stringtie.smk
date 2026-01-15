@@ -6,7 +6,7 @@ rule stringtie:
     conda:
         "../envs/stringtie.yml"
     log:
-        "logs/stringtie/{sample}.log",
+        "results/stringtie/{sample}.log",
     params:
         ref_gff=config["annotation"]["stringtie"]["ref_anno"],
         strandedness=lambda wildcards: (
@@ -32,10 +32,31 @@ rule stringtie_merge:
     conda:
         "../envs/stringtie.yml"
     log:
-        "logs/stringtie/stringtie_merge.log",
+        "results/stringtie/stringtie_merge.log",
     params:
         ref_gff=config["annotation"]["stringtie"]["ref_anno"],
     shell:
         """
-       stringtie --merge -G {params.ref_gff} -o {output.gtf} {input.gtfs}
-       """
+        stringtie --merge -G {params.ref_gff} -o {output.gtf} {input.gtfs}
+        """
+
+
+rule gff_compare:
+    input:
+        gtfs=expand(
+            "results/stringtie/{sample}.gtf", sample=fastq_process_align.samples.index
+        ),
+        ref_gff="results/get_genome/genome.gff",
+    output:
+        gtf="results/gffcompare/gffcmp.annotated.gtf",
+    params:
+        extra=config["annotation"]["gffcompare"]["extra"],
+        output_prefix=subpath(output.gtf, strip_suffix=".annotated.gtf"),
+    conda:
+        "../envs/gffcompare.yml"
+    log:
+        "results/gffcompare/gffcompare.log",
+    shell:
+        """
+        gffcompare {params.extra} -o {params.output_prefix} -r {input.ref_gff} {input.gtfs}
+        """
