@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0 (2026-01-15)
+
+
+### Features
+
+* add gffcompare support ([03fb34f](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/03fb34f9ca86def923450de1e1dd4b7ad77fb0db))
+* add string_tie rules ([51b6bc9](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/51b6bc98cdf38da3cd87738cf5b81670b4dcfd83))
+* add support to make ucsc browser tracks ([3b94aa1](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/3b94aa13205454a3a3b983f53ae395179e6df6aa))
+
+
+### Bug Fixes
+
+* input to samtools_sort ([63632a2](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/63632a2ee7421963d8295726b161734078a7f9d2))
+* star alignment to allow stringtie ([dfbb090](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/dfbb090563b417a34fa0e4436362c9c85a5a087f))
+* stringtie merge command ([7333571](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/7333571abe673a68c134be6341a2c29360813061))
+* yaml format ([7d51e62](https://github.com/aryazand/rnaseq_to_genome_annotation/commit/7d51e62bebb6514a2afd7b26787a0bade4c14fb5))
+
 ## [1.1.0](https://github.com/snakemake-workflows/snakemake-workflow-template/compare/v1.0.0...v1.1.0) (2025-07-29)
 
 
